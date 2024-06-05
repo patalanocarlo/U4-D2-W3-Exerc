@@ -2,20 +2,20 @@ package Patalanocarlo;
 
 import jakarta.persistence.*;
 
-public class EventoDAO {
+public class PersonaDAO {
     private EntityManagerFactory emf;
     private EntityManager em;
 
-    public EventoDAO() {
+    public PersonaDAO() {
         this.emf = Persistence.createEntityManagerFactory("ExerciseDay2");
         this.em = emf.createEntityManager();
     }
 
-    public void save(Evento evento) {
+    public void save(Persona persona) {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.persist(evento);
+            em.persist(persona);
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -25,9 +25,9 @@ public class EventoDAO {
         }
     }
 
-    public Evento getById(Long id) {
+    public Persona getById(Long id) {
         try {
-            return em.find(Evento.class, id);
+            return em.find(Persona.class, id);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -38,12 +38,10 @@ public class EventoDAO {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-
-            Evento evento = em.find(Evento.class, id);
-            if (evento != null) {
-                em.remove(evento);
+            Persona persona = em.find(Persona.class, id);
+            if (persona != null) {
+                em.remove(persona);
             }
-
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {

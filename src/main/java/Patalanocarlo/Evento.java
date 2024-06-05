@@ -1,44 +1,52 @@
 package Patalanocarlo;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "evento")
 public class Evento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-private long id;
+    @GeneratedValue
+    private Long id;
 
-private String titolo;
+    private String titolo;
 
-@Column(name = "data_Evento")
-    private LocalDate DataEvento;
+    @Column(name = "data_evento")
+    private LocalDate dataEvento;
 
-@Column
+    @Column
     private String descrizione;
-@Enumerated(EnumType.STRING)
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_evento")
     private TipoEvento tipoEvento;
 
     @Column(name = "numero_massimo_partecipanti")
     private int numeroMassimoPartecipanti;
+//CASCADETYPE LO HO USATO PER ANDARE AD USARE IL SALVATAGGIO E LA ELIMINAZIONE AD OGNI ISTANZA DELLE PARTECIPèAZIONI cioè se elimino un evento eliminero anche la sua partecipazione.
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL) //Vado a dire che un singolo evento puo avere piu Partecipazioni
+    private List<Partecipazione> listaPartecipazioni; //appunto può avere varie partecipazioni di una Lista
 
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+//Dato che molti eventi Possono essere assocaiti a un unica Location ho creato un ManytoONE cosi facendo ho una location ma con piu eventi
+    //Inoltre vado a dire che la colonna del id della località del evento verra associato ad ogni singolo evento per quella località
+    public Evento() {}
 
-    public Evento(){
-
+    public Evento(String titolo, LocalDate dataEvento, String descrizione, int numeroMassimoPartecipanti, TipoEvento tipoEvento, Location location) {
+        this.titolo = titolo;
+        this.dataEvento = dataEvento;
+        this.descrizione = descrizione;
+        this.tipoEvento = tipoEvento;
+        this.numeroMassimoPartecipanti = numeroMassimoPartecipanti;
+        this.location = location;
     }
 
-    public Evento(String titolo,LocalDate dataEvento,String descrizione ,int numeroMassimoPartecipanti,TipoEvento tipoEvento){
-        this.titolo=titolo;
-        this.DataEvento=dataEvento;
-        this.descrizione=descrizione;
-        this.tipoEvento=tipoEvento;
-        this.numeroMassimoPartecipanti=numeroMassimoPartecipanti;
-
-    }
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -56,11 +64,11 @@ private String titolo;
     }
 
     public LocalDate getDataEvento() {
-        return DataEvento;
+        return dataEvento;
     }
 
     public void setDataEvento(LocalDate dataEvento) {
-        this.DataEvento = dataEvento;
+        this.dataEvento = dataEvento;
     }
 
     public String getDescrizione() {
@@ -86,5 +94,20 @@ private String titolo;
     public void setNumeroMassimoPartecipanti(int numeroMassimoPartecipanti) {
         this.numeroMassimoPartecipanti = numeroMassimoPartecipanti;
     }
-}
 
+    public List<Partecipazione> getListaPartecipazioni() {
+        return listaPartecipazioni;
+    }
+
+    public void setListaPartecipazioni(List<Partecipazione> listaPartecipazioni) {
+        this.listaPartecipazioni = listaPartecipazioni;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+}
