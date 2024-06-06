@@ -7,7 +7,7 @@ public class PartecipazioneDAO {
     private EntityManager em;
 
     public PartecipazioneDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ExerciseDay2");
+        this.emf = Persistence.createEntityManagerFactory("Esercitazione-d5-w3");
         this.em = emf.createEntityManager();
     }
 

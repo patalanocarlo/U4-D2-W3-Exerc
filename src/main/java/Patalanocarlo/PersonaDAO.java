@@ -7,7 +7,7 @@ public class PersonaDAO {
     private EntityManager em;
 
     public PersonaDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ExerciseDay2");
+        this.emf = Persistence.createEntityManagerFactory("Esercitazione-d5-w3");
         this.em = emf.createEntityManager();
     }
 

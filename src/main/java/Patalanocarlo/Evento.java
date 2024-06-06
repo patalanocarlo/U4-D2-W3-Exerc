@@ -6,6 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "evento")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Evento {
 
     @Id
@@ -45,6 +46,8 @@ public class Evento {
         this.numeroMassimoPartecipanti = numeroMassimoPartecipanti;
         this.location = location;
     }
+
+
 
     // Getters e Setters
     public Long getId() {

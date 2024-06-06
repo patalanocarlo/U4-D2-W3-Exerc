@@ -1,11 +1,10 @@
 package Patalanocarlo;
-
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import java.time.LocalDate;
 
 public class Application {
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("ExerciseDay2");
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("Esercitazione-d5-w3");
 
     public static void main(String[] args) {
         EventoDAO eventoDAO = new EventoDAO();
@@ -40,7 +39,15 @@ Persona trovapersona=personaDAO.getById(persona.getId());
             System.out.println("Persona non trovata.");
         }
         // Elimina l'evento
-        eventoDAO.deleteById(902L);
+        eventoDAO.deleteById(2052L);
         personaDAO.deleteById(902L);
+        PartitaDiCalcio partitaDiCalcio = new PartitaDiCalcio("Inter vs Milan", LocalDate.now(), "Derby tra Inter e Milan", 100000, TipoEvento.PUBBLICO, location, "Inter", "Milan", "Inter", 1, 0);
+        eventoDAO.save(partitaDiCalcio);
+
+        // Creazione e salvataggio di un nuovo concerto
+        Concerto concerto = new Concerto("Concerto di Rock", LocalDate.of(2024, 6, 10), "Concerto di musica rock", 5000, TipoEvento.PUBBLICO, location, Genere.ROCK, true);
+        eventoDAO.save(concerto);
+
     }
+
 }
